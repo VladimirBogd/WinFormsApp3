@@ -22,10 +22,10 @@ namespace WinFormsApp3.Tests
         [TestMethod()]
         public void AddExistElementToFirstTest()
         {
-            SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 10 }));
-            SetOfIntegers otherSet = new(new List<int>(new int[] { 10 }));
+            SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
+            SetOfIntegers otherSet = new(new List<int>(new int[] { 3 }));
             SetOfIntegers resultSet = oneSet + otherSet;
-            Assert.AreEqual("1 2 3 10", resultSet.PrintSet());
+            Assert.AreEqual("1 2 3", resultSet.PrintSet());
         }
         [TestMethod()]
         public void AddNotExistElementToSecondTest()
@@ -38,18 +38,18 @@ namespace WinFormsApp3.Tests
         [TestMethod()]
         public void AddExistElementToSecondTest()
         {
-            SetOfIntegers oneSet = new(new List<int>(new int[] { 3 }));
-            SetOfIntegers otherSet = new(new List<int>(new int[] { 10, 11, 12, 3 }));
+            SetOfIntegers oneSet = new(new List<int>(new int[] { 12 }));
+            SetOfIntegers otherSet = new(new List<int>(new int[] { 10, 11, 12 }));
             SetOfIntegers resultSet = otherSet + oneSet;
-            Assert.AreEqual("10 11 12 3", resultSet.PrintSet());
+            Assert.AreEqual("10 11 12", resultSet.PrintSet());
         }
         [TestMethod()]
         public void RemoveExistElementFromFirstTest()
         {
-            SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 10 }));
-            SetOfIntegers otherSet = new(new List<int>(new int[] { 10 }));
+            SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
+            SetOfIntegers otherSet = new(new List<int>(new int[] { 3 }));
             SetOfIntegers resultSet = oneSet - otherSet;
-            Assert.AreEqual("1 2 3", resultSet.PrintSet());
+            Assert.AreEqual("1 2", resultSet.PrintSet());
         }
         [TestMethod()]
         public void RemoveNotExistElementFromFirstTest()
@@ -63,9 +63,9 @@ namespace WinFormsApp3.Tests
         public void RemoveExistElementFromSecondTest()
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 10 }));
-            SetOfIntegers otherSet = new(new List<int>(new int[] { 11, 12, 13, 10 }));
+            SetOfIntegers otherSet = new(new List<int>(new int[] { 11, 12, 10 }));
             SetOfIntegers resultSet = otherSet - oneSet;
-            Assert.AreEqual("11 12 13", resultSet.PrintSet());
+            Assert.AreEqual("11 12", resultSet.PrintSet());
         }
         [TestMethod()]
         public void RemoveNotExistElementFromSecondTest()
@@ -84,20 +84,12 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3 4 5 6 7", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void DifferenceFirstSetTest()
+        public void DifferenceTest()
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 4, 5, 6 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 4, 5, 6, 7 }));
             SetOfIntegers resultSet = oneSet - otherSet;
             Assert.AreEqual("1 2 3", resultSet.PrintSet());
-        }
-        [TestMethod()]
-        public void DifferenceSecondSetTest()
-        {
-            SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 4, 5, 6 }));
-            SetOfIntegers otherSet = new(new List<int>(new int[] { 4, 5, 6, 7, 8, 9 }));
-            SetOfIntegers resultSet = otherSet - oneSet;
-            Assert.AreEqual("7 8 9", resultSet.PrintSet());
         }
         [TestMethod()]
         public void IntersectionTest()

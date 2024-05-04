@@ -16,168 +16,171 @@ namespace WinFormsApp3
         {
             InitializeComponent();
         }
-        private void onValueChanged(object sender, EventArgs e)
+
+        private void textBoxFirst_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                textBoxSecond.Select();
+        }
+        private void textBoxSecond_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                buttonResult.Select();
+        }
+        private void buttonResult_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBoxFirst.Select();
+                Calculate();
+            }
+        }
+        private void buttonResult_Click(object sender, EventArgs e)
         {
             Calculate();
         }
 
-        private SetOfIntegers ProcessInputNumbers(int choice)
-        {
-            List<int> numbersList = new();
-            string input;
-            if (choice == 1)
-            {
-                input = textBoxFirst.Text;
-            }
-            else
-            {
-                input = textBoxSecond.Text;
-            }
-
-            // Разделяем строку на массив строк по пробелам
-            string[] numberStrings = input.Split(' ');
-
-            // Отслеживаем, был ли нажат "Пробел" или перемещен фокус
-            bool spacePressed = false;
-            bool focusChanged = false;
-
-            // Проверяем каждую строку на валидность и добавляем валидные числа в список
-            foreach (string numberString in numberStrings)
-            {
-                if (string.IsNullOrWhiteSpace(numberString))
-                {
-                    continue;
-                }
-
-                // Проверяем, был ли нажат "Пробел" или перемещен фокус
-                if (spacePressed || focusChanged)
-                {
-                    if (numberString == " ")
-                    {
-                        // Блокируем ввод двух пробелов подряд
-                        continue;
-                    }
-                }
-
-                if (int.TryParse(numberString, out int number))
-                {
-                    if (numbersList.Contains(number))
-                    {
-                        // Отображаем сообщение об ошибке и возвращаем пустой набор
-                        MessageBox.Show("Некорректное значение: " + numberString + " (Дублирующееся число)");
-                        return new SetOfIntegers();
-                    }
-                    numbersList.Add(number);
-                }
-                else
-                {
-                    // Отображаем сообщение об ошибке и возвращаем пустой набор
-                    MessageBox.Show("Некорректное значение: " + numberString);
-                    return new SetOfIntegers();
-                }
-
-                // Проверяем, был ли нажат "Пробел"
-                if (numberString == " ")
-                {
-                    spacePressed = true;
-                }
-            }
-
-            // Создаем и возвращаем набор целых чисел
-            SetOfIntegers setOfIntegers = new SetOfIntegers(numbersList);
-            return setOfIntegers;
-        }
-
-
 
         private void Calculate()
         {
-            // Получаем входные наборы целых чисел
-            SetOfIntegers firstSet = ProcessInputNumbers(1);
-            SetOfIntegers secondSet = ProcessInputNumbers(2);
-
-            if (firstSet.elements.Count == 0 && secondSet.elements.Count == 0)
+            // Проверяем, непустые ли поля ввода
+            if (textBoxFirst.Text.Equals("") && textBoxSecond.Text.Equals(""))
             {
+                textBoxFirst.BackColor = Color.Red;
+                textBoxSecond.BackColor = Color.Red;
                 textBoxResult.Text = "Поля ввода пустые";
+                return;
             }
-            else if (firstSet.elements.Count == 0 && secondSet.elements.Count != 0)
+            if (textBoxFirst.Text.Equals(""))
             {
+                textBoxFirst.BackColor = Color.Red;
                 textBoxResult.Text = "Первое поле ввода пустое";
+                return;
             }
-            else if (firstSet.elements.Count != 0 && secondSet.elements.Count == 0)
+            if (textBoxSecond.Text.Equals(""))
             {
+                textBoxSecond.BackColor = Color.Red;
                 textBoxResult.Text = "Второе поле ввода пустое";
+                return;
             }
-            else
+            // Проверяем, выбрана ли операция
+            if (comboBoxOperation.SelectedIndex == -1)
             {
-                textBoxResult.Text = "";
-                // Проверяем, выбрана ли операция
-                if (comboBoxOperation.Text.Equals(""))
-                {
+                textBoxResult.Text = "Не выбрана операция";
+                return;
+            }
+            // Возвращаем изначальный цвет
+            textBoxFirst.BackColor = Color.White;
+            textBoxSecond.BackColor = Color.White;
+            // Удаление лишних пробелов
+            textBoxFirst.Text = textBoxFirst.Text.Trim();
+            while (textBoxFirst.Text.Contains("  "))
+            {
+                textBoxFirst.Text = textBoxFirst.Text.Replace("  ", " ");
+            }
+            textBoxSecond.Text = textBoxSecond.Text.Trim();
+            while (textBoxSecond.Text.Contains("  "))
+            {
+                textBoxSecond.Text = textBoxSecond.Text.Replace("  ", " ");
+            }
+            // Заводим переменные для множеств
+            var firstSet = new SetOfIntegers(ParseInputToSet(textBoxFirst.Text));
+            var secondSet = new SetOfIntegers(ParseInputToSet(textBoxSecond.Text));
+            // Определяем результирующий набор в зависимости от выбранной операции
+            var resultSet = new SetOfIntegers(new List<int>());
+            switch (comboBoxOperation.SelectedItem)
+            {
+                case "Объединение":
+                    if (secondSet.elements.Count > 1 && firstSet.elements.Count > 1)
+                        resultSet = firstSet + secondSet;
+                    else
+                    {
+                        MessageBox.Show("Введите множества а не отдельные элементы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+                case "Пересечение":
+                    if (secondSet.elements.Count > 1 && firstSet.elements.Count > 1)
+                        resultSet = firstSet & secondSet;
+                    else
+                    {
+                        MessageBox.Show("Введите множества а не отдельные элементы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+                case "Разность":
+                    if (secondSet.elements.Count > 1 && firstSet.elements.Count > 1)
+                        resultSet = firstSet - secondSet;
+                    else
+                    {
+                        MessageBox.Show("Введите множества а не отдельные элементы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+                case "Добавить элемент":
+                    if (firstSet.elements.Count > 1 && secondSet.elements.Count == 1)
+                        resultSet = firstSet + secondSet;
+                    else if (secondSet.elements.Count > 1 && firstSet.elements.Count == 1)
+                        resultSet = secondSet + firstSet;
+                    else
+                    {
+                        MessageBox.Show("Один элемент должен добавляться к множеству", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+                case "Удалить элемент":
+                    if (firstSet.elements.Count > 1 && secondSet.elements.Count == 1)
+                        resultSet = firstSet - secondSet;
+                    else
+                    {
+                        MessageBox.Show("Один элемент должен удаляться из множества", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    break;
+                default:
                     textBoxResult.Text = "";
                     return;
-                }
-
-                // Определяем результирующий набор в зависимости от выбранной операции
-                SetOfIntegers resultSet;
-                switch (comboBoxOperation.Text)
-                {
-                    case "Объединение":
-                        resultSet = firstSet + secondSet;
-                        break;
-                    case "Пересечение":
-                        resultSet = firstSet & secondSet;
-                        break;
-                    case "Разность":
-                        resultSet = firstSet - secondSet;
-                        break;
-                    case "Добавить элемент":
-                        if (firstSet.elements.Count > 1 && secondSet.elements.Count == 1)
-                        {
-                            resultSet = firstSet + secondSet;
-                        }
-                        else if (secondSet.elements.Count > 1 && firstSet.elements.Count == 1)
-                        {
-                            resultSet = secondSet + firstSet;
-                        }
-                        else
-                        {
-                            textBoxResult.Text = "Ошибка: Один элемент должен добавляться к множеству";
-                            textBoxFirst.BackColor = Color.Red;
-                            textBoxSecond.BackColor = Color.Red;
-                            return;
-                        }
-                        break;
-                    case "Удалить элемент":
-                        if (firstSet.elements.Count > 1 && secondSet.elements.Count == 1)
-                        {
-                            resultSet = firstSet - secondSet;
-                        }
-                        else
-                        {
-                            textBoxResult.Text = "Ошибка: Один элемент должен удаляться из множества";
-                            textBoxFirst.BackColor = Color.Red;
-                            textBoxSecond.BackColor = Color.Red;
-                            return;
-                        }
-                        break;
-                    default:
-                        textBoxResult.Text = "";
-                        return;
-                }
-
-                // Выводим результирующий набор
-                textBoxResult.Text = resultSet.PrintSet();
-
-                // Сбрасываем цвета фоновых заливок текстовых полей ввода
-                textBoxFirst.BackColor = Color.White;
-                textBoxSecond.BackColor = Color.White;
             }
+            // Выводим результирующий набор
+            textBoxResult.Text = resultSet.PrintSet();
         }
 
-        private void textBoxFirst_KeyDown(object sender, KeyEventArgs e)
+        private List<int> ParseInputToSet(string input)
         {
-            
+            // Заводим переменную для текущего множества
+            var set = new List<int>();
+            var numbers = input.Split(' ');
+            // Преобразуем значения из массива строк в целые числа и добавляем их в List<int>
+            foreach (string numberString in numbers)
+            {
+                if (int.TryParse(numberString, out int number))
+                {
+                    if (!set.Contains(number))
+                    {
+                        set.Add(number);
+                    }
+                    else
+                    {
+                        if (input == textBoxFirst.Text)
+                            textBoxFirst.BackColor = Color.Red;
+                        else
+                            textBoxSecond.BackColor = Color.Red;
+                        MessageBox.Show($"Дублирующиеся значения: {numberString}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return new List<int>();
+                    }
+                }
+                else
+                {
+                    if (input == textBoxFirst.Text)
+                        textBoxFirst.BackColor = Color.Red;
+                    else
+                        textBoxSecond.BackColor = Color.Red;
+                    MessageBox.Show($"Некорректный ввод: {numberString}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return new List<int>();
+                }
+            }
+            // Возвращаем получившийся List<int>
+            return set;
         }
     }
 }

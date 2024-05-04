@@ -14,25 +14,13 @@ namespace WinFormsApp3
 
         public SetOfIntegers(List<int> elements)
         {
-            if (elements == null || elements.Contains(0))
-            {
-                this.elements = new List<int>();
-            }
-            else
-            {
-                this.elements = elements;
-            }
+            this.elements = elements;
         }
-        public SetOfIntegers()
-        {
-            this.elements = new List<int>();
-        }
-
+        // Преобразование элементов типа SetOfIntegers в строку
         public string PrintSet()
         {
             return string.Join(" ", this.elements);
         }
-
         // Перегрузка оператора "+" для выполнения операции объединения множеств (union)
         public static SetOfIntegers operator +(SetOfIntegers oneSet, SetOfIntegers otherSet)
         {
@@ -46,11 +34,8 @@ namespace WinFormsApp3
                     resultSet.Add(element);
                 }
             }
-            // Сортируем результирующий список для удобства
-            resultSet.Sort();
             return new SetOfIntegers(resultSet);
         }
-
         // Перегрузка оператора "&" для выполнения операции пересечения множеств (intersection)
         public static SetOfIntegers operator &(SetOfIntegers oneSet, SetOfIntegers otherSet)
         {
@@ -62,11 +47,8 @@ namespace WinFormsApp3
                     resultSet.Add(element);
                 }
             }
-            // Сортируем результирующий список для удобства
-            resultSet.Sort();
             return new SetOfIntegers(resultSet);
         }
-
         // Перегрузка оператора "-" для выполнения операции разности множеств (difference)
         public static SetOfIntegers operator -(SetOfIntegers oneSet, SetOfIntegers otherSet)
         {
@@ -78,8 +60,6 @@ namespace WinFormsApp3
                     resultSet.Add(element);
                 }
             }
-            // Сортируем результирующий список для удобства
-            resultSet.Sort();
             return new SetOfIntegers(resultSet);
         }
     }

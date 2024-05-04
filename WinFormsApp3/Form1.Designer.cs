@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonResult = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxFirst
@@ -44,14 +45,12 @@
             this.textBoxFirst.Name = "textBoxFirst";
             this.textBoxFirst.Size = new System.Drawing.Size(200, 23);
             this.textBoxFirst.TabIndex = 0;
-            this.textBoxFirst.TextChanged += new System.EventHandler(this.onValueChanged);
             this.textBoxFirst.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxFirst_KeyDown);
             // 
             // comboBoxOperation
             // 
             this.comboBoxOperation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBoxOperation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxOperation.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBoxOperation.FormattingEnabled = true;
             this.comboBoxOperation.Items.AddRange(new object[] {
             "Добавить элемент",
@@ -63,7 +62,6 @@
             this.comboBoxOperation.Name = "comboBoxOperation";
             this.comboBoxOperation.Size = new System.Drawing.Size(141, 23);
             this.comboBoxOperation.TabIndex = 1;
-            this.comboBoxOperation.SelectedIndexChanged += new System.EventHandler(this.onValueChanged);
             // 
             // textBoxSecond
             // 
@@ -71,11 +69,11 @@
             this.textBoxSecond.Name = "textBoxSecond";
             this.textBoxSecond.Size = new System.Drawing.Size(200, 23);
             this.textBoxSecond.TabIndex = 2;
-            this.textBoxSecond.TextChanged += new System.EventHandler(this.onValueChanged);
+            this.textBoxSecond.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSecond_KeyDown);
             // 
             // textBoxResult
             // 
-            this.textBoxResult.Location = new System.Drawing.Point(12, 116);
+            this.textBoxResult.Location = new System.Drawing.Point(12, 141);
             this.textBoxResult.Name = "textBoxResult";
             this.textBoxResult.ReadOnly = true;
             this.textBoxResult.Size = new System.Drawing.Size(350, 23);
@@ -111,17 +109,32 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 101);
+            this.label4.Location = new System.Drawing.Point(15, 126);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 15);
             this.label4.TabIndex = 7;
             this.label4.Text = "Результат:";
             // 
+            // buttonResult
+            // 
+            this.buttonResult.BackgroundImage = global::WinFormsApp3.Properties.Resources.gas_kvas_com_p_znak_ravno_na_prozrachnom_fone_8;
+            this.buttonResult.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonResult.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonResult.Font = new System.Drawing.Font("Garamond", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonResult.Location = new System.Drawing.Point(157, 103);
+            this.buttonResult.Name = "buttonResult";
+            this.buttonResult.Size = new System.Drawing.Size(60, 30);
+            this.buttonResult.TabIndex = 8;
+            this.buttonResult.UseVisualStyleBackColor = true;
+            this.buttonResult.Click += new System.EventHandler(this.buttonResult_Click);
+            this.buttonResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.buttonResult_KeyDown);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 151);
+            this.ClientSize = new System.Drawing.Size(374, 174);
+            this.Controls.Add(this.buttonResult);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -148,5 +161,6 @@
         private Label label2;
         private Label label3;
         private Label label4;
+        private Button buttonResult;
     }
 }
