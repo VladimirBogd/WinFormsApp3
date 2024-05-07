@@ -11,7 +11,6 @@ namespace WinFormsApp3
     public class SetOfIntegers
     {
         public List<int> elements;
-
         public SetOfIntegers(List<int> elements)
         {
             this.elements = elements;
@@ -24,8 +23,8 @@ namespace WinFormsApp3
         // Перегрузка оператора "+" для выполнения операции объединения множеств (union)
         public static SetOfIntegers operator +(SetOfIntegers oneSet, SetOfIntegers otherSet)
         {
-            // Создаем новый список, чтобы избежать изменения исходных множеств
-            List<int> resultSet = new List<int>(oneSet.elements);
+            List<int> resultSet = oneSet.elements;
+
             // Добавляем элементы из второго множества, если они отсутствуют в первом
             foreach (int element in otherSet.elements)
             {

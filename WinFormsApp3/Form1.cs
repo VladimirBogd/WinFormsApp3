@@ -20,19 +20,18 @@ namespace WinFormsApp3
         private void textBoxFirst_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                textBoxSecond.Select();
+                textBoxSecond.Focus();
         }
         private void textBoxSecond_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                buttonResult.Select();
+                buttonResult.Focus();
         }
         private void buttonResult_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                textBoxFirst.Select();
-                Calculate();
+                textBoxFirst.Focus();
             }
         }
         private void buttonResult_Click(object sender, EventArgs e)

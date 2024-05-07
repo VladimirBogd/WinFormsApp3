@@ -12,7 +12,7 @@ namespace WinFormsApp3.Tests
     public class SetOfIntegersTests
     {
         [TestMethod()]
-        public void AddNotExistElementToFirstTest()
+        public void AddNotExistElementToFirstTest() // Добавление элемента в 1-ое множество, которого там нет
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 10 }));
@@ -20,7 +20,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3 10", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void AddExistElementToFirstTest()
+        public void AddExistElementToFirstTest() // Добавление элемента в 1-ое множество, который там есть
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 3 }));
@@ -28,7 +28,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void AddNotExistElementToSecondTest()
+        public void AddNotExistElementToSecondTest() // Добавление элемента во 2-ое множество, которого там нет
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 3 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 10, 11, 12 }));
@@ -36,7 +36,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("10 11 12 3", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void AddExistElementToSecondTest()
+        public void AddExistElementToSecondTest() // Добавление элемента во 2-ое множество, который там есть
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 12 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 10, 11, 12 }));
@@ -44,7 +44,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("10 11 12", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void RemoveExistElementFromFirstTest()
+        public void RemoveExistElementFromFirstTest() // Удаление элемента из 1-го множества, который там есть
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 3 }));
@@ -52,7 +52,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void RemoveNotExistElementFromFirstTest()
+        public void RemoveNotExistElementFromFirstTest() // Удаление элемента из 1-го множества, которого там нет
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 10 }));
@@ -60,7 +60,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void RemoveExistElementFromSecondTest()
+        public void RemoveExistElementFromSecondTest() // Удаление элемента из 2-го множества, который там есть
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 10 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 11, 12, 10 }));
@@ -68,7 +68,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("11 12", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void RemoveNotExistElementFromSecondTest()
+        public void RemoveNotExistElementFromSecondTest() // Удаление элемента из 2-го множества, которого там нет
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 10 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 11, 12, 13 }));
@@ -76,7 +76,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("11 12 13", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void UnionTest()
+        public void UnionTest() // Объединение 2-х множеств
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 4 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 4, 5, 6, 7 }));
@@ -84,7 +84,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3 4 5 6 7", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void DifferenceTest()
+        public void DifferenceTest() // Разность 2-х множеств
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 4, 5, 6 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 4, 5, 6, 7 }));
@@ -92,7 +92,7 @@ namespace WinFormsApp3.Tests
             Assert.AreEqual("1 2 3", resultSet.PrintSet());
         }
         [TestMethod()]
-        public void IntersectionTest()
+        public void IntersectionTest() // Пересечение 2-х множеств
         {
             SetOfIntegers oneSet = new(new List<int>(new int[] { 1, 2, 3, 4, 5, 6 }));
             SetOfIntegers otherSet = new(new List<int>(new int[] { 4, 5, 6, 7 }));
